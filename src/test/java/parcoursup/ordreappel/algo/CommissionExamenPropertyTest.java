@@ -4,9 +4,16 @@ import com.pholser.junit.quickcheck.From;
 import com.pholser.junit.quickcheck.Property;
 import com.pholser.junit.quickcheck.generator.InRange;
 import com.pholser.junit.quickcheck.runner.JUnitQuickcheck;
+import org.apache.commons.lang3.tuple.Pair;
+import org.apache.commons.lang3.tuple.Triple;
 import org.junit.runner.RunWith;
 
+import java.util.ArrayList;
+import java.util.HashMap;
 import java.util.List;
+import java.util.Map;
+import java.util.stream.Collectors;
+import java.util.stream.IntStream;
 
 import static org.assertj.core.api.Assertions.assertThat;
 
@@ -42,6 +49,51 @@ public class CommissionExamenPropertyTest {
             long tauxCourant = (nombre_de_boursiers_trouves * 100) / (i * 100);
             assertThat(tauxCourant).isLessThanOrEqualTo(tauxEnPourcentage);
         }
+    }
+
+    @Property
+    public void Un_candidat_boursier_qui_a_le_rang_r_dans_le_classement_pédagogique_n_est_jamais_doublé_par_personne_et_aura_donc_un_rang_inférieur_ou_égal_à_r_dans_l_ordre_d_appel(
+            @From(ClassementPedagogiqueGenerator.class) ClassementPedagogique classementPedagogique,
+            @InRange(min = "0", max = "100") int tauxEnPourcentage) {
+        Formation formation = new Formation(3);
+        ComissionExamen commisionExamen = new ComissionExamen(formation);
+
+        OrdreAppel ordreAppel = commisionExamen.ordonnerParCritères(classementPedagogique, new TauxBoursier(tauxEnPourcentage));
+
+        Map<Eleve, Integer> classementPedagogiqueEleves = zipWithIndex(classementPedagogique.eleves.toArray(new Eleve[0]));
+        Map<Eleve, Integer> ordreAppelEleves = zipWithIndex(ordreAppel.eleves.toArray(new Eleve[0]));
+        List<Triple<Eleve, Integer, Integer>> rangs = grouper(classementPedagogiqueEleves, ordreAppelEleves);
+
+
+        List<Triple<Eleve, Integer, Integer>> rangsElevesBoursiers = rangs.stream().filter(e -> e.getLeft().isBoursier()).collect(Collectors.toList());
+        for (Triple<Eleve, Integer, Integer> rang : rangsElevesBoursiers) {
+            List<Triple<Eleve, Integer, Integer>> elevesAvant = rangs.stream()
+                    // Tous les eleves qui sont classes avant dans le nouveau classement
+                    .filter(e -> e.getRight() < rang.getRight())
+                    // Aucun n'était classé apres dans l'ancien classement
+                    .filter(e -> e.getMiddle() > rang.getMiddle())
+                    .collect(Collectors.toList());
+            assertThat(elevesAvant).isEmpty();
+        }
+    }
+
+    private List<Triple<Eleve, Integer, Integer>> grouper(Map<Eleve, Integer> classementPedagogiqueEleves, Map<Eleve, Integer> ordreAppelEleves) {
+        List<Triple<Eleve, Integer, Integer>> result = new ArrayList<>();
+        for (Map.Entry<Eleve, Integer> e : classementPedagogiqueEleves.entrySet()) {
+            result.add(Triple.of(e.getKey(), e.getValue(), ordreAppelEleves.get(e.getKey())));
+        }
+        return result;
+    }
+
+    private <T> Map<T, Integer> zipWithIndex(T[] array) {
+        List<Pair<Integer, T>> collect = IntStream.range(0, array.length)
+                .mapToObj(i -> Pair.of(i, array[i]))
+                .collect(Collectors.toList());
+        Map<T, Integer> result = new HashMap<>();
+        for (Pair<Integer, T> p : collect) {
+            result.put(p.getRight(), p.getLeft());
+        }
+        return result;
     }
 
 }
