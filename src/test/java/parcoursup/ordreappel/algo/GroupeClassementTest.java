@@ -22,12 +22,12 @@ public class GroupeClassementTest {
     @Test
     public void ne_devrait_faire_aucune_proposition_pour_une_formation_sans_place() {
         Eleve eleve = new Eleve();
-        Postulants postulants = new Postulants(eleve);
+        ClassementPedagogique classementPedagogique = new ClassementPedagogique(eleve);
 
         Formation formation = new Formation(0);
         ComissionExamen commisionExamen = new ComissionExamen(formation);
 
-        OrdreAppel ordreAppel = commisionExamen.trie(postulants);
+        OrdreAppel ordreAppel = commisionExamen.trieSelon(classementPedagogique);
 
         assertThat(ordreAppel).isEqualTo(new OrdreAppel());
     }
@@ -35,12 +35,12 @@ public class GroupeClassementTest {
     @Test
     public void devrait_proposer_au_seul_postulant_la_seule_place_de_la_formation() {
         Eleve eleve = new Eleve();
-        Postulants postulants = new Postulants(eleve);
+        ClassementPedagogique classementPedagogique = new ClassementPedagogique(eleve);
 
         Formation formation = new Formation(1);
         ComissionExamen commisionExamen = new ComissionExamen(formation);
 
-        OrdreAppel ordreAppel = commisionExamen.trie(postulants);
+        OrdreAppel ordreAppel = commisionExamen.trieSelon(classementPedagogique);
 
         assertThat(ordreAppel).isEqualTo(OrdreAppel.de(eleve));
     }
@@ -49,12 +49,27 @@ public class GroupeClassementTest {
     public void devrait_proposer_des_places_tant_qu_il_y_en_a() {
         Eleve eleve1 = new Eleve();
         Eleve eleve2 = new Eleve();
-        Postulants postulants = new Postulants(eleve1, eleve2);
+        ClassementPedagogique classementPedagogique = new ClassementPedagogique(eleve1, eleve2);
 
         Formation formation = new Formation(2);
         ComissionExamen commisionExamen = new ComissionExamen(formation);
 
-        OrdreAppel ordreAppel = commisionExamen.trie(postulants);
+        OrdreAppel ordreAppel = commisionExamen.trieSelon(classementPedagogique);
+
+        assertThat(ordreAppel).isEqualTo(OrdreAppel.de(eleve1, eleve2));
+    }
+
+    @Test
+    public void devrait_ne_pas_faire_plus_de_proposition_qu_il_n_y_a_de_places() {
+        Eleve eleve1 = new Eleve();
+        Eleve eleve2 = new Eleve();
+        Eleve eleve3 = new Eleve();
+        ClassementPedagogique classementPedagogique = new ClassementPedagogique(eleve1, eleve2, eleve3);
+
+        Formation formation = new Formation(2);
+        ComissionExamen commisionExamen = new ComissionExamen(formation);
+
+        OrdreAppel ordreAppel = commisionExamen.trieSelon(classementPedagogique);
 
         assertThat(ordreAppel).isEqualTo(OrdreAppel.de(eleve1, eleve2));
     }
