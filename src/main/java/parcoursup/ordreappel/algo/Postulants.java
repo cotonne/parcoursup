@@ -1,7 +1,9 @@
 package parcoursup.ordreappel.algo;
 
 public class Postulants {
-    public Postulants(Eleve voeu) {
+    public final Eleve eleve;
 
+    public Postulants(Eleve eleve) {
+        this.eleve = eleve;
     }
 }

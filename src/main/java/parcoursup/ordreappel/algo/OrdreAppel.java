@@ -15,11 +15,27 @@ import java.util.Objects;
  */
 public class OrdreAppel {
 
+    private final Eleve eleve;
     /* la liste des voeux, dans l'ordre d'appel */
     public List<VoeuClasse> voeux = new LinkedList<>();
 
-    public static Postulants de(Eleve eleve) {
-        return null;
+    protected OrdreAppel(Eleve eleve) {
+        this.eleve = eleve;
+    }
+
+    public OrdreAppel() {
+        eleve = null;
+    }
+
+    public static OrdreAppel de(Eleve eleve) {
+        return new OrdreAppel(eleve);
+    }
+
+    @Override
+    public String toString() {
+        return "OrdreAppel{" +
+                "eleve=" + eleve +
+                '}';
     }
 
     @Override
@@ -27,21 +43,21 @@ public class OrdreAppel {
         if (this == o) return true;
         if (o == null || getClass() != o.getClass()) return false;
         OrdreAppel that = (OrdreAppel) o;
-        return Objects.equals(voeux, that.voeux);
+        return Objects.equals(eleve, that.eleve);
     }
 
     @Override
     public int hashCode() {
 
-        return Objects.hash(voeux);
+        return Objects.hash(eleve);
     }
 
     /* calcule une mesure de la différence entre le classement original et l'ordre d'appel:
-        le nombre d'inversions ramené au nombre maximal d'inversions.
-        Le nombre maximal d'inversions est obtenu si le classement est totalement inversé
-        (cas hypothétique), auqel cas il y a autant d'inversions que de paires non-ordonnées
-        de candidat c'est-à-dire n * (n - 1) / 2.
-         */
+            le nombre d'inversions ramené au nombre maximal d'inversions.
+            Le nombre maximal d'inversions est obtenu si le classement est totalement inversé
+            (cas hypothétique), auqel cas il y a autant d'inversions que de paires non-ordonnées
+            de candidat c'est-à-dire n * (n - 1) / 2.
+             */
     public double coefficientDivergence() {
 
         if (voeux.size() <= 1) {
