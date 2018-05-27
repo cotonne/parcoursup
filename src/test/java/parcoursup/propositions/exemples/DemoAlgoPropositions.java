@@ -19,9 +19,9 @@
  */
 package parcoursup.propositions.exemples;
 
-import org.junit.Test;
 
-import java.sql.SQLException;
+import org.junit.jupiter.api.Test;
+
 import java.util.Random;
 
 public class DemoAlgoPropositions {

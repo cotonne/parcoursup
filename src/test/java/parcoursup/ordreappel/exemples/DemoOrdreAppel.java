@@ -18,7 +18,8 @@
  */
 package parcoursup.ordreappel.exemples;
 
-import org.junit.Test;
+
+import org.junit.jupiter.api.Test;
 
 public class DemoOrdreAppel {
 
