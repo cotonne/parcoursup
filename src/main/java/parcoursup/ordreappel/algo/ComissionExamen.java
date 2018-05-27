@@ -14,15 +14,20 @@ public class ComissionExamen {
         return limiterParPlaceFormation(ordreAppel);
     }
 
-    private OrdreAppel ordonnerParCritères(ClassementPedagogique classementPedagogique, TauxBoursier tauxBoursier) {
+    OrdreAppel ordonnerParCritères(ClassementPedagogique classementPedagogique, TauxBoursier tauxBoursier) {
         Groupe groupe = classementPedagogique.construire();
 
 
         OrdreAppel ordreAppel = new OrdreAppel();
         while (groupe.aDesPostulants()) {
-            StatusBourse selection = choisir(tauxBoursier, groupe, ordreAppel);
 
-            Pair<Eleve, Groupe> pair = groupe.prendreSelon(selection);
+            Pair<Eleve, Groupe> pair;
+            if (ordreAppel.respecte(tauxBoursier)) {
+                pair = groupe.prendreSuivant();
+            } else {
+                StatusBourse selection = choisir(tauxBoursier, groupe, ordreAppel);
+                pair = groupe.prendreSelon(selection);
+            }
 
             Eleve nouveauSelectionne = pair.getLeft();
             groupe = pair.getRight();
@@ -34,7 +39,7 @@ public class ComissionExamen {
 
     private StatusBourse choisir(TauxBoursier tauxBoursier, Groupe groupe, OrdreAppel ordreAppel) {
         StatusBourse selection;
-        if (!ordreAppel.respecter(tauxBoursier) && groupe.aDesBoursiers() ||
+        if (!ordreAppel.respecte(tauxBoursier) && groupe.aDesBoursiers() ||
                 !groupe.aDesNonBoursiers()) {
             selection = StatusBourse.BOURSIER;
         } else {

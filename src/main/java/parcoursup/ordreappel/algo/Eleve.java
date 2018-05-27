@@ -22,7 +22,7 @@ public class Eleve {
     @Override
     public String toString() {
         return "Eleve{" +
-                "id=" + super.toString() +
+                "id=" + super.toString() + ", " +
                 "statusBourse=" + statusBourse +
                 '}';
     }

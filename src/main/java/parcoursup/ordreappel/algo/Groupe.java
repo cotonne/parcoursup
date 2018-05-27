@@ -2,31 +2,38 @@ package parcoursup.ordreappel.algo;
 
 import org.apache.commons.lang3.tuple.Pair;
 
+import java.util.ArrayList;
 import java.util.List;
 
 public class Groupe {
-    public final List<Eleve> boursiers;
-    public final List<Eleve> nonBoursiers;
+    private final List<Eleve> eleves;
 
-    public Groupe(List<Eleve> boursiers, List<Eleve> nonBoursiers) {
-        this.boursiers = boursiers;
-        this.nonBoursiers = nonBoursiers;
+    public Groupe(List<Eleve> eleves) {
+        this.eleves = eleves;
     }
 
     boolean aDesBoursiers() {
-        return !boursiers.isEmpty();
+        return eleves.stream().anyMatch(Eleve::isBoursier);
     }
 
     private Pair<Eleve, Groupe> retirerPremierBoursier() {
-        Eleve head = boursiers.get(0);
-        List<Eleve> tail = boursiers.subList(1, boursiers.size());
-        return Pair.of(head, new Groupe(tail, nonBoursiers));
+        Eleve head = eleves.stream().filter(Eleve::isBoursier).findFirst().orElseThrow(() -> new IllegalStateException("Plus de boursiers"));
+        List<Eleve> tail = new ArrayList<>(eleves);
+        tail.remove(head);
+        return Pair.of(head, new Groupe(tail));
     }
 
     private Pair<Eleve, Groupe> retirerPremierNonBoursier() {
-        Eleve head = nonBoursiers.get(0);
-        List<Eleve> tail = nonBoursiers.subList(1, nonBoursiers.size());
-        return Pair.of(head, new Groupe(boursiers, tail));
+        Eleve head = eleves.stream().filter(x -> !x.isBoursier()).findFirst().orElseThrow(() -> new IllegalStateException("Plus de boursiers"));
+        List<Eleve> tail = new ArrayList<>(eleves);
+        tail.remove(head);
+        return Pair.of(head, new Groupe(tail));
+    }
+
+    public Pair<Eleve, Groupe> prendreSuivant() {
+        Eleve head = eleves.get(0);
+        List<Eleve> tail = eleves.subList(1, eleves.size());
+        return Pair.of(head, new Groupe(tail));
     }
 
     Pair<Eleve, Groupe> prendreSelon(StatusBourse selection) {
@@ -44,6 +51,6 @@ public class Groupe {
     }
 
     boolean aDesNonBoursiers() {
-        return !nonBoursiers.isEmpty();
+        return !eleves.stream().allMatch(Eleve::isBoursier);
     }
 }

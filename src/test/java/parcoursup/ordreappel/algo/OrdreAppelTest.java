@@ -28,7 +28,7 @@ public class OrdreAppelTest {
     public void indique_que_le_taux_est_respecte() {
         OrdreAppel ordreAppel = OrdreAppel.de(Eleve.nonBoursier(), Eleve.boursier(), Eleve.nonBoursier(), Eleve.nonBoursier());
 
-        boolean tauxRespecte = ordreAppel.respecter(new TauxBoursier(25));
+        boolean tauxRespecte = ordreAppel.respecte(new TauxBoursier(25));
 
         assertThat(tauxRespecte).isTrue();
     }
@@ -37,7 +37,7 @@ public class OrdreAppelTest {
     public void indique_que_le_taux_n_est_pas_respecte_pour_un_taux_limite() {
         OrdreAppel ordreAppel = OrdreAppel.de(Eleve.nonBoursier(), Eleve.boursier(), Eleve.nonBoursier());
 
-        boolean tauxRespecte = ordreAppel.respecter(new TauxBoursier(34));
+        boolean tauxRespecte = ordreAppel.respecte(new TauxBoursier(34));
 
         assertThat(tauxRespecte).isFalse();
     }

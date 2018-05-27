@@ -12,7 +12,7 @@ import java.util.*;
  */
 public class OrdreAppel {
 
-    private final List<Eleve> eleves;
+    public final List<Eleve> eleves;
     /* la liste des voeux, dans l'ordre d'appel */
     public List<VoeuClasse> voeux = new LinkedList<>();
 
@@ -83,7 +83,7 @@ public class OrdreAppel {
         return OrdreAppel.de(eleves.subList(0, nombrePlace).toArray(new Eleve[0]));
     }
 
-    public boolean respecter(TauxBoursier tauxBoursier) {
+    public boolean respecte(TauxBoursier tauxBoursier) {
         return tauxBoursier.estMoinsQue(calculerPourcentageBoursiers());
     }
 
