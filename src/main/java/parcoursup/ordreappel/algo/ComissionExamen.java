@@ -25,7 +25,7 @@ public class ComissionExamen {
             if (ordreAppel.respecte(tauxBoursier)) {
                 pair = groupe.prendreSuivant();
             } else {
-                StatusBourse selection = choisir(tauxBoursier, groupe, ordreAppel);
+                StatusBourse selection = choisirUnBoursierDePreference(groupe);
                 pair = groupe.prendreSelon(selection);
             }
 
@@ -37,10 +37,9 @@ public class ComissionExamen {
         return ordreAppel;
     }
 
-    private StatusBourse choisir(TauxBoursier tauxBoursier, Groupe groupe, OrdreAppel ordreAppel) {
+    private StatusBourse choisirUnBoursierDePreference(Groupe groupe) {
         StatusBourse selection;
-        if (!ordreAppel.respecte(tauxBoursier) && groupe.aDesBoursiers() ||
-                !groupe.aDesNonBoursiers()) {
+        if (groupe.aDesBoursiers() || !groupe.aDesNonBoursiers()) {
             selection = StatusBourse.BOURSIER;
         } else {
             selection = StatusBourse.NON_BOURSIER;
