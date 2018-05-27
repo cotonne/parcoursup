@@ -1,9 +1,9 @@
 package parcoursup.ordreappel.algo;
 
 public class Postulants {
-    public final Eleve eleve;
+    public final Eleve[] eleves;
 
-    public Postulants(Eleve eleve) {
-        this.eleve = eleve;
+    public Postulants(Eleve... eleves) {
+        this.eleves = eleves;
     }
 }

@@ -8,8 +8,8 @@ public class ComissionExamen {
     }
 
     public OrdreAppel trie(Postulants postulants) {
-        if (formationProposée.nombrePlace == 1) {
-            return OrdreAppel.de(postulants.eleve);
+        if (formationProposée.nombrePlace > 0) {
+            return OrdreAppel.de(postulants.eleves);
         }
         return new OrdreAppel();
     }

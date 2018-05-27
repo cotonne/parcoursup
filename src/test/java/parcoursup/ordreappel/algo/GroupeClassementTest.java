@@ -44,4 +44,18 @@ public class GroupeClassementTest {
 
         assertThat(ordreAppel).isEqualTo(OrdreAppel.de(eleve));
     }
+
+    @Test
+    public void devrait_proposer_des_places_tant_qu_il_y_en_a() {
+        Eleve eleve1 = new Eleve();
+        Eleve eleve2 = new Eleve();
+        Postulants postulants = new Postulants(eleve1, eleve2);
+
+        Formation formation = new Formation(2);
+        ComissionExamen commisionExamen = new ComissionExamen(formation);
+
+        OrdreAppel ordreAppel = commisionExamen.trie(postulants);
+
+        assertThat(ordreAppel).isEqualTo(OrdreAppel.de(eleve1, eleve2));
+    }
 }

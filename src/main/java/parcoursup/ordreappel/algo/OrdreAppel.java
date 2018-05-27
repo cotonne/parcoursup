@@ -5,36 +5,35 @@
  */
 package parcoursup.ordreappel.algo;
 
+import java.util.Arrays;
 import java.util.LinkedList;
 import java.util.List;
-import java.util.Objects;
 
 /**
- *
  * @author gimbert
  */
 public class OrdreAppel {
 
-    private final Eleve eleve;
+    private final Eleve[] eleves;
     /* la liste des voeux, dans l'ordre d'appel */
     public List<VoeuClasse> voeux = new LinkedList<>();
 
-    protected OrdreAppel(Eleve eleve) {
-        this.eleve = eleve;
+    protected OrdreAppel(Eleve... eleves) {
+        this.eleves = eleves;
     }
 
     public OrdreAppel() {
-        eleve = null;
+        eleves = new Eleve[0];
     }
 
-    public static OrdreAppel de(Eleve eleve) {
+    public static OrdreAppel de(Eleve... eleve) {
         return new OrdreAppel(eleve);
     }
 
     @Override
     public String toString() {
         return "OrdreAppel{" +
-                "eleve=" + eleve +
+                "eleve=" + Arrays.toString(eleves) +
                 '}';
     }
 
@@ -43,21 +42,20 @@ public class OrdreAppel {
         if (this == o) return true;
         if (o == null || getClass() != o.getClass()) return false;
         OrdreAppel that = (OrdreAppel) o;
-        return Objects.equals(eleve, that.eleve);
+        return Arrays.equals(eleves, that.eleves);
     }
 
     @Override
     public int hashCode() {
-
-        return Objects.hash(eleve);
+        return Arrays.hashCode(eleves);
     }
 
     /* calcule une mesure de la différence entre le classement original et l'ordre d'appel:
-            le nombre d'inversions ramené au nombre maximal d'inversions.
-            Le nombre maximal d'inversions est obtenu si le classement est totalement inversé
-            (cas hypothétique), auqel cas il y a autant d'inversions que de paires non-ordonnées
-            de candidat c'est-à-dire n * (n - 1) / 2.
-             */
+                le nombre d'inversions ramené au nombre maximal d'inversions.
+                Le nombre maximal d'inversions est obtenu si le classement est totalement inversé
+                (cas hypothétique), auqel cas il y a autant d'inversions que de paires non-ordonnées
+                de candidat c'est-à-dire n * (n - 1) / 2.
+                 */
     public double coefficientDivergence() {
 
         if (voeux.size() <= 1) {
