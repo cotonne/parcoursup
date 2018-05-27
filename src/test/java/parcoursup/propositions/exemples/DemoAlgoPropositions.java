@@ -27,7 +27,7 @@ import java.util.Random;
 public class DemoAlgoPropositions {
 
     @Test
-    public static void main(String[] args) throws SQLException, Exception {
+    public void test() throws Exception {
 
         Random random = new Random();
 

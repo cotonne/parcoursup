@@ -20,12 +20,10 @@ package parcoursup.ordreappel.exemples;
 
 import org.junit.Test;
 
-import java.sql.SQLException;
-
 public class DemoOrdreAppel {
 
     @Test
-    public static void main(String[] args) throws SQLException, Exception {
+    public void test() throws Exception {
 
         ExempleA1 exempleA1 = new ExempleA1();
         exempleA1.execute();

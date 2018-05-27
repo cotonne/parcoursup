@@ -19,12 +19,7 @@
  */
 package parcoursup.ordreappel.algo;
 
-import java.util.HashMap;
-import java.util.LinkedList;
-import java.util.List;
-import java.util.Map;
-import java.util.PriorityQueue;
-import java.util.Queue;
+import java.util.*;
 
 public class GroupeClassement {
 
@@ -78,7 +73,7 @@ public class GroupeClassement {
         int nbResidentsTotal = 0;
 
         /* on trie les voeux par classement */
-        voeuxClasses.sort((VoeuClasse v1, VoeuClasse v2) -> v1.rang - v2.rang);
+        voeuxClasses.sort(Comparator.comparingInt((VoeuClasse v) -> v.rang));
 
         for (VoeuClasse voe : voeuxClasses) {
 
@@ -130,7 +125,7 @@ public class GroupeClassement {
             /* stocke le meilleur candidat à appeler tout en respectant
             les deux contraintes si possible 
             ou à défaut seulement la contrainte sur le taux boursier */
-            VoeuClasse meilleur = null;
+            VoeuClasse meilleur;
 
             if (!eligibles.isEmpty()) {
                 meilleur = eligibles.peek();

@@ -19,9 +19,10 @@
  */
 package parcoursup.propositions.algo;
 
+import parcoursup.propositions.VerificationsResultats;
+
 import java.time.LocalDateTime;
 import java.util.HashMap;
-import parcoursup.propositions.test.VerificationsResultats;
 import java.util.HashSet;
 import java.util.Map;
 import java.util.Set;

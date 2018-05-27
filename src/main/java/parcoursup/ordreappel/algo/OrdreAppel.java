@@ -7,6 +7,7 @@ package parcoursup.ordreappel.algo;
 
 import java.util.LinkedList;
 import java.util.List;
+import java.util.Objects;
 
 /**
  *
@@ -17,12 +18,30 @@ public class OrdreAppel {
     /* la liste des voeux, dans l'ordre d'appel */
     public List<VoeuClasse> voeux = new LinkedList<>();
 
-    /* calcule une mesure de la différence entre le classement original et l'ordre d'appel: 
-    le nombre d'inversions ramené au nombre maximal d'inversions.
-    Le nombre maximal d'inversions est obtenu si le classement est totalement inversé
-    (cas hypothétique), auqel cas il y a autant d'inversions que de paires non-ordonnées 
-    de candidat c'est-à-dire n * (n - 1) / 2.
-     */
+    public static Postulants de(Eleve eleve) {
+        return null;
+    }
+
+    @Override
+    public boolean equals(Object o) {
+        if (this == o) return true;
+        if (o == null || getClass() != o.getClass()) return false;
+        OrdreAppel that = (OrdreAppel) o;
+        return Objects.equals(voeux, that.voeux);
+    }
+
+    @Override
+    public int hashCode() {
+
+        return Objects.hash(voeux);
+    }
+
+    /* calcule une mesure de la différence entre le classement original et l'ordre d'appel:
+        le nombre d'inversions ramené au nombre maximal d'inversions.
+        Le nombre maximal d'inversions est obtenu si le classement est totalement inversé
+        (cas hypothétique), auqel cas il y a autant d'inversions que de paires non-ordonnées
+        de candidat c'est-à-dire n * (n - 1) / 2.
+         */
     public double coefficientDivergence() {
 
         if (voeux.size() <= 1) {
