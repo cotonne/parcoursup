@@ -15,33 +15,31 @@ public class ComissionExamen {
     }
 
     OrdreAppel ordonnerParCritères(ClassementPedagogique classementPedagogique, TauxBoursier tauxBoursier) {
-        Groupe groupe = classementPedagogique.construire();
-
-
+        ClassementPedagogique classementPedagogiqueCourant = classementPedagogique;
         OrdreAppel ordreAppel = new OrdreAppel();
-        while (groupe.aDesPostulants()) {
-            Pair<Eleve, Groupe> pair = choisir(tauxBoursier, groupe, ordreAppel);
+        while (classementPedagogiqueCourant.aDesPostulants()) {
+            Pair<Eleve, ClassementPedagogique> pair = choisir(tauxBoursier, classementPedagogiqueCourant, ordreAppel);
 
             Eleve nouveauSelectionne = pair.getLeft();
             ordreAppel = ordreAppel.ajouter(nouveauSelectionne);
-            groupe = pair.getRight();
+            classementPedagogiqueCourant = pair.getRight();
         }
 
         return ordreAppel;
     }
 
-    private Pair<Eleve, Groupe> choisir(TauxBoursier tauxBoursier, Groupe groupe, OrdreAppel ordreAppel) {
-        Pair<Eleve, Groupe> pair;
+    private Pair<Eleve, ClassementPedagogique> choisir(TauxBoursier tauxBoursier, ClassementPedagogique classementPedagogique, OrdreAppel ordreAppel) {
+        Pair<Eleve, ClassementPedagogique> pair;
         if (ordreAppel.respecte(tauxBoursier)) {
-            pair = groupe.prendreSuivant();
+            pair = classementPedagogique.prendreSuivant();
         } else {
             StatusBourse selection;
-            if (groupe.aDesBoursiers() || !groupe.aDesNonBoursiers()) {
+            if (classementPedagogique.aDesBoursiers() || !classementPedagogique.aDesNonBoursiers()) {
                 selection = StatusBourse.BOURSIER;
             } else {
                 selection = StatusBourse.NON_BOURSIER;
             }
-            pair = groupe.prendreSelon(selection);
+            pair = classementPedagogique.prendreSelon(selection);
         }
         return pair;
     }
