@@ -27,7 +27,7 @@ public class GroupeClassementTest {
         Formation formation = new Formation(0);
         ComissionExamen commisionExamen = new ComissionExamen(formation);
 
-        OrdreAppel ordreAppel = commisionExamen.trieSelon(classementPedagogique);
+        OrdreAppel ordreAppel = commisionExamen.ordonnerSelon(classementPedagogique);
 
         assertThat(ordreAppel).isEqualTo(new OrdreAppel());
     }
@@ -40,7 +40,7 @@ public class GroupeClassementTest {
         Formation formation = new Formation(1);
         ComissionExamen commisionExamen = new ComissionExamen(formation);
 
-        OrdreAppel ordreAppel = commisionExamen.trieSelon(classementPedagogique);
+        OrdreAppel ordreAppel = commisionExamen.ordonnerSelon(classementPedagogique);
 
         assertThat(ordreAppel).isEqualTo(OrdreAppel.de(eleve));
     }
@@ -54,7 +54,7 @@ public class GroupeClassementTest {
         Formation formation = new Formation(2);
         ComissionExamen commisionExamen = new ComissionExamen(formation);
 
-        OrdreAppel ordreAppel = commisionExamen.trieSelon(classementPedagogique);
+        OrdreAppel ordreAppel = commisionExamen.ordonnerSelon(classementPedagogique);
 
         assertThat(ordreAppel).isEqualTo(OrdreAppel.de(eleve1, eleve2));
     }
@@ -69,7 +69,7 @@ public class GroupeClassementTest {
         Formation formation = new Formation(2);
         ComissionExamen commisionExamen = new ComissionExamen(formation);
 
-        OrdreAppel ordreAppel = commisionExamen.trieSelon(classementPedagogique);
+        OrdreAppel ordreAppel = commisionExamen.ordonnerSelon(classementPedagogique);
 
         assertThat(ordreAppel).isEqualTo(OrdreAppel.de(eleve1, eleve2));
     }

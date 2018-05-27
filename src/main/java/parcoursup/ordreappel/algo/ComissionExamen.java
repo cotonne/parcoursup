@@ -7,7 +7,7 @@ public class ComissionExamen {
         this.formationProposée = formationProposée;
     }
 
-    public OrdreAppel trieSelon(ClassementPedagogique classementPedagogique) {
+    public OrdreAppel ordonnerSelon(ClassementPedagogique classementPedagogique) {
         return OrdreAppel.de(classementPedagogique.eleves.subList(0, formationProposée.nombrePlace).toArray(new Eleve[0]));
     }
 }
