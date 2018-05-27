@@ -5,25 +5,23 @@
  */
 package parcoursup.ordreappel.algo;
 
-import java.util.Arrays;
-import java.util.LinkedList;
-import java.util.List;
+import java.util.*;
 
 /**
  * @author gimbert
  */
 public class OrdreAppel {
 
-    private final Eleve[] eleves;
+    private final List<Eleve> eleves;
     /* la liste des voeux, dans l'ordre d'appel */
     public List<VoeuClasse> voeux = new LinkedList<>();
 
     protected OrdreAppel(Eleve... eleves) {
-        this.eleves = eleves;
+        this.eleves = Arrays.asList(eleves);
     }
 
     public OrdreAppel() {
-        eleves = new Eleve[0];
+        eleves = Collections.emptyList();
     }
 
     public static OrdreAppel de(Eleve... eleve) {
@@ -33,7 +31,7 @@ public class OrdreAppel {
     @Override
     public String toString() {
         return "OrdreAppel{" +
-                "eleve=" + Arrays.toString(eleves) +
+                "eleves=" + eleves +
                 '}';
     }
 
@@ -42,12 +40,13 @@ public class OrdreAppel {
         if (this == o) return true;
         if (o == null || getClass() != o.getClass()) return false;
         OrdreAppel that = (OrdreAppel) o;
-        return Arrays.equals(eleves, that.eleves);
+        return Objects.equals(eleves, that.eleves);
     }
 
     @Override
     public int hashCode() {
-        return Arrays.hashCode(eleves);
+
+        return Objects.hash(eleves);
     }
 
     /* calcule une mesure de la différence entre le classement original et l'ordre d'appel:
@@ -78,5 +77,28 @@ public class OrdreAppel {
         return (2.0f * nbInversions)
                 / (voeux.size() * (voeux.size() - 1));
 
+    }
+
+    public OrdreAppel limit(int nombrePlace) {
+        return OrdreAppel.de(eleves.subList(0, nombrePlace).toArray(new Eleve[0]));
+    }
+
+    public boolean respecter(TauxBoursier tauxBoursier) {
+        return tauxBoursier.estMoinsQue(calculerPourcentageBoursiers());
+    }
+
+    public TauxBoursier calculerPourcentageBoursiers() {
+        int nombreEleves = eleves.size();
+        if (nombreEleves == 0) {
+            return TauxBoursier.ZERO;
+        }
+        long nombreBoursiers = eleves.stream().filter(Eleve::isBoursier).count();
+        return new TauxBoursier(nombreBoursiers * 100 / nombreEleves);
+    }
+
+    public OrdreAppel ajouter(Eleve nouveauSelectionne) {
+        List<Eleve> listeFinale = new ArrayList<>(eleves);
+        listeFinale.add(nouveauSelectionne);
+        return OrdreAppel.de(listeFinale.toArray(new Eleve[0]));
     }
 }
