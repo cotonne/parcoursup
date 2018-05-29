@@ -1,17 +1,13 @@
 package parcoursup.ordreappel.algo;
 
 public class Eleve {
-    public final StatusBourse statusBourse;
+    private final StatusBourse statusBourse;
 
-    protected Eleve(StatusBourse statusBourse) {
+    private Eleve(StatusBourse statusBourse) {
         this.statusBourse = statusBourse;
     }
 
-    public Eleve() {
-        statusBourse = null;
-    }
-
-    public static Eleve nonBoursier() {
+    static Eleve nonBoursier() {
         return new Eleve(StatusBourse.NON_BOURSIER);
     }
 
@@ -27,11 +23,11 @@ public class Eleve {
                 '}';
     }
 
-    public StatusBourse getStatusBourse() {
-        return statusBourse;
-    }
-
     public boolean isBoursier() {
         return statusBourse == StatusBourse.BOURSIER;
+    }
+
+    boolean hasStatus(StatusBourse status) {
+        return this.statusBourse == status;
     }
 }

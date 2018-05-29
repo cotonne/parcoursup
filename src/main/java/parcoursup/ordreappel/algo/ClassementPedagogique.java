@@ -29,15 +29,8 @@ public class ClassementPedagogique {
         return eleves.stream().anyMatch(Eleve::isBoursier);
     }
 
-    private Pair<Eleve, ClassementPedagogique> retirerPremierBoursier() {
-        Eleve head = eleves.stream().filter(Eleve::isBoursier).findFirst().orElseThrow(() -> new IllegalStateException("Plus de boursiers"));
-        List<Eleve> tail = new ArrayList<>(eleves);
-        tail.remove(head);
-        return Pair.of(head, new ClassementPedagogique(tail));
-    }
-
-    private Pair<Eleve, ClassementPedagogique> retirerPremierNonBoursier() {
-        Eleve head = eleves.stream().filter(x -> !x.isBoursier()).findFirst().orElseThrow(() -> new IllegalStateException("Plus de boursiers"));
+    private Pair<Eleve, ClassementPedagogique> prendreSelonStatusBourse(StatusBourse nonBoursier) {
+        Eleve head = eleves.stream().filter(e -> e.hasStatus(nonBoursier)).findFirst().orElseThrow(() -> new IllegalStateException("Plus de boursiers"));
         List<Eleve> tail = new ArrayList<>(eleves);
         tail.remove(head);
         return Pair.of(head, new ClassementPedagogique(tail));
@@ -49,14 +42,8 @@ public class ClassementPedagogique {
         return Pair.of(head, new ClassementPedagogique(tail));
     }
 
-    Pair<Eleve, ClassementPedagogique> prendreSelon(StatusBourse selection) {
-        Pair<Eleve, ClassementPedagogique> pair;
-        if (selection == StatusBourse.BOURSIER) {
-            pair = retirerPremierBoursier();
-        } else {
-            pair = retirerPremierNonBoursier();
-        }
-        return pair;
+    Pair<Eleve, ClassementPedagogique> prendreSuivantSelon(StatusBourse selection) {
+        return prendreSelonStatusBourse(selection);
     }
 
     boolean aDesPostulants() {

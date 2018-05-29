@@ -33,13 +33,13 @@ public class ComissionExamen {
         if (ordreAppel.respecte(tauxBoursier)) {
             pair = classementPedagogique.prendreSuivant();
         } else {
-            StatusBourse selection;
+            StatusBourse statusBourse;
             if (classementPedagogique.aDesBoursiers() || !classementPedagogique.aDesNonBoursiers()) {
-                selection = StatusBourse.BOURSIER;
+                statusBourse = StatusBourse.BOURSIER;
             } else {
-                selection = StatusBourse.NON_BOURSIER;
+                statusBourse = StatusBourse.NON_BOURSIER;
             }
-            pair = classementPedagogique.prendreSelon(selection);
+            pair = classementPedagogique.prendreSuivantSelon(statusBourse);
         }
         return pair;
     }
