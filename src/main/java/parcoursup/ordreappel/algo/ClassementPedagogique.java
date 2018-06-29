@@ -8,14 +8,10 @@ import java.util.Collections;
 import java.util.List;
 
 public class ClassementPedagogique {
-    public final List<Eleve> eleves;
+    final List<Eleve> eleves;
 
-    public ClassementPedagogique(Eleve... eleves) {
+    ClassementPedagogique(Eleve... eleves) {
         this.eleves = Collections.unmodifiableList(Arrays.asList(eleves));
-    }
-
-    public ClassementPedagogique(List<Eleve> eleves) {
-        this.eleves = eleves;
     }
 
     @Override
@@ -29,29 +25,20 @@ public class ClassementPedagogique {
         return eleves.stream().anyMatch(Eleve::isBoursier);
     }
 
-    private Pair<Eleve, ClassementPedagogique> prendreSelonStatusBourse(StatusBourse nonBoursier) {
-        Eleve head = eleves.stream().filter(e -> e.hasStatus(nonBoursier)).findFirst().orElseThrow(() -> new IllegalStateException("Plus de boursiers"));
-        List<Eleve> tail = new ArrayList<>(eleves);
-        tail.remove(head);
-        return Pair.of(head, new ClassementPedagogique(tail));
-    }
-
     Pair<Eleve, ClassementPedagogique> prendreSuivant() {
         Eleve head = eleves.get(0);
         List<Eleve> tail = eleves.subList(1, eleves.size());
-        return Pair.of(head, new ClassementPedagogique(tail));
+        return Pair.of(head, new ClassementPedagogique(tail.toArray(new Eleve[0])));
     }
 
     Pair<Eleve, ClassementPedagogique> prendreSuivantSelon(StatusBourse selection) {
-        return prendreSelonStatusBourse(selection);
+        Eleve head = eleves.stream().filter(e -> e.hasStatus(selection)).findFirst().orElseThrow(() -> new IllegalStateException("Plus de boursiers"));
+        List<Eleve> tail = new ArrayList<>(eleves);
+        tail.remove(head);
+        return Pair.of(head, new ClassementPedagogique(tail.toArray(new Eleve[0])));
     }
 
     boolean aDesPostulants() {
         return !eleves.isEmpty();
     }
-
-    boolean aDesNonBoursiers() {
-        return !eleves.stream().allMatch(Eleve::isBoursier);
-    }
-
 }
