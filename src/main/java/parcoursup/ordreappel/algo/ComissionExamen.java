@@ -9,12 +9,12 @@ public class ComissionExamen {
         this.formationProposée = formationProposée;
     }
 
-    public OrdreAppel ordonnerSelon(ClassementPedagogique classementPedagogique, Pair<StatusBourse, Taux>... contrainte) {
+    public OrdreAppel ordonnerSelon(ClassementPedagogique classementPedagogique, Pair<StatusAvecPriorite, Taux>... contrainte) {
         OrdreAppel ordreAppel = ordonnerParCritères(classementPedagogique, contrainte);
         return limiterParPlaceFormation(ordreAppel);
     }
 
-    OrdreAppel ordonnerParCritères(ClassementPedagogique classementPedagogique, Pair<StatusBourse, Taux>... contrainte) {
+    OrdreAppel ordonnerParCritères(ClassementPedagogique classementPedagogique, Pair<StatusAvecPriorite, Taux>... contrainte) {
         ClassementPedagogique classementPedagogiqueCourant = classementPedagogique;
         OrdreAppel ordreAppel = new OrdreAppel();
         while (classementPedagogiqueCourant.aDesPostulants()) {
@@ -28,21 +28,22 @@ public class ComissionExamen {
         return ordreAppel;
     }
 
-    private Pair<Eleve, ClassementPedagogique> choisir(ClassementPedagogique classementPedagogique, OrdreAppel ordreAppel, Pair<StatusBourse, Taux>... contrainte) {
-        Pair<Eleve, ClassementPedagogique> pair;
-        Taux taux = contrainte[0].getValue();
-        if (ordreAppel.respecte(taux)) {
-            pair = classementPedagogique.prendreSuivant();
-        } else {
-            StatusBourse statusBourse;
-            if (classementPedagogique.aDesBoursiers()) {
-                statusBourse = StatusBourse.BOURSIER;
-            } else {
-                statusBourse = StatusBourse.NON_BOURSIER;
-            }
-            pair = classementPedagogique.prendreSuivantSelon(statusBourse);
+    private Pair<Eleve, ClassementPedagogique> choisir(ClassementPedagogique classementPedagogique, OrdreAppel ordreAppel, Pair<StatusAvecPriorite, Taux>... contrainte) {
+        Pair<StatusAvecPriorite, Taux> uneContrainte = contrainte[0];
+        Taux taux = uneContrainte.getValue();
+        StatusAvecPriorite statusAvecPriorite = uneContrainte.getKey();
+
+        if (ordreAppel.respecte(taux, e -> e.hasStatus(statusAvecPriorite))) {
+            return classementPedagogique.prendreSuivant();
         }
-        return pair;
+
+        StatusAvecPriorite status;
+        if (classementPedagogique.a(statusAvecPriorite)) {
+            status = statusAvecPriorite;
+        } else {
+            status = statusAvecPriorite.nonPrioritaire();
+        }
+        return classementPedagogique.prendreSuivantSelon(status);
     }
 
     private OrdreAppel limiterParPlaceFormation(OrdreAppel ordreAppel) {

@@ -31,7 +31,7 @@ public class ClassementPedagogique {
         return Pair.of(head, new ClassementPedagogique(tail.toArray(new Eleve[0])));
     }
 
-    Pair<Eleve, ClassementPedagogique> prendreSuivantSelon(StatusBourse selection) {
+    Pair<Eleve, ClassementPedagogique> prendreSuivantSelon(StatusAvecPriorite selection) {
         Eleve head = eleves.stream().filter(e -> e.hasStatus(selection)).findFirst().orElseThrow(() -> new IllegalStateException("Plus de boursiers"));
         List<Eleve> tail = new ArrayList<>(eleves);
         tail.remove(head);
@@ -40,5 +40,9 @@ public class ClassementPedagogique {
 
     boolean aDesPostulants() {
         return !eleves.isEmpty();
+    }
+
+    public boolean a(StatusAvecPriorite statusAvecPriorite) {
+        return eleves.stream().anyMatch(e -> e.hasStatus(statusAvecPriorite));
     }
 }

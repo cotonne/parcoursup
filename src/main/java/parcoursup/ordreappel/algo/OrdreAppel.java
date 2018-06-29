@@ -6,6 +6,7 @@
 package parcoursup.ordreappel.algo;
 
 import java.util.*;
+import java.util.function.Predicate;
 
 /**
  * @author gimbert
@@ -83,16 +84,16 @@ public class OrdreAppel {
         return OrdreAppel.de(eleves.subList(0, nombrePlace).toArray(new Eleve[0]));
     }
 
-    public boolean respecte(Taux tauxBoursier) {
-        return tauxBoursier.estMoinsQue(calculerPourcentageBoursiers());
+    public boolean respecte(Taux tauxBoursier, Predicate<Eleve> critere) {
+        return tauxBoursier.estMoinsQue(calculerPourcentageBoursiers(critere));
     }
 
-    public Taux calculerPourcentageBoursiers() {
+    public Taux calculerPourcentageBoursiers(Predicate<Eleve> critere) {
         int nombreEleves = eleves.size();
         if (nombreEleves == 0) {
             return Taux.ZERO;
         }
-        long nombreBoursiers = eleves.stream().filter(Eleve::isBoursier).count();
+        long nombreBoursiers = eleves.stream().filter(critere).count();
         return new Taux(nombreBoursiers * 100 / nombreEleves);
     }
 
