@@ -34,7 +34,7 @@ public class ComissionExamen {
             pair = classementPedagogique.prendreSuivant();
         } else {
             StatusBourse statusBourse;
-            if (classementPedagogique.aDesBoursiers() || !classementPedagogique.aDesNonBoursiers()) {
+            if (classementPedagogique.aDesBoursiers()) {
                 statusBourse = StatusBourse.BOURSIER;
             } else {
                 statusBourse = StatusBourse.NON_BOURSIER;

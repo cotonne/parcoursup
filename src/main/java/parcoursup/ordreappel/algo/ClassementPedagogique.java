@@ -47,7 +47,7 @@ public class ClassementPedagogique {
     }
 
     boolean aDesPostulants() {
-        return aDesBoursiers() || aDesNonBoursiers();
+        return !eleves.isEmpty();
     }
 
     boolean aDesNonBoursiers() {

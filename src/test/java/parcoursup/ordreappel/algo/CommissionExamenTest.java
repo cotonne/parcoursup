@@ -127,4 +127,31 @@ public class CommissionExamenTest {
         assertThat(ordreAppel).isEqualTo(OrdreAppel.de(eleves));
     }
 
+//    @Test
+//    public void devrait_prioriser_les_eleves_non_residents() {
+//        Eleve eleveResident = Eleve.resident();
+//        Eleve eleveNonResident = Eleve.nonResident();
+//        ClassementPedagogique classementPedagogique = new ClassementPedagogique(eleveResident, eleveNonResident);
+//
+//        Formation formation = new Formation(3);
+//        ComissionExamen commisionExamen = new ComissionExamen(formation);
+//
+//        OrdreAppel ordreAppel = commisionExamen.ordonnerParCritères(classementPedagogique, new Taux<>(0), new Taux<>(100));
+//        assertThat(ordreAppel).isEqualTo(OrdreAppel.de(eleveNonResident, eleveResident));
+//    }
+//
+//    @Test
+//    public void devrait_prioriser_les_eleves_non_residents_en_fonction_du_taux_de_non_residents() {
+//        Eleve eleveResident = Eleve.resident();
+//        Eleve eleveNonResident = Eleve.nonResident();
+//        Eleve eleveNonResident2 = Eleve.nonResident();
+//        ClassementPedagogique classementPedagogique = new ClassementPedagogique(eleveResident, eleveNonResident, eleveNonResident2);
+//
+//        Formation formation = new Formation(3);
+//        ComissionExamen commisionExamen = new ComissionExamen(formation);
+//
+//        OrdreAppel ordreAppel = commisionExamen.ordonnerParCritères(classementPedagogique, new Taux<>(0), new Taux<>(50));
+//        assertThat(ordreAppel).isEqualTo(OrdreAppel.de(eleveNonResident, eleveResident, eleveNonResident2));
+//    }
+
 }
