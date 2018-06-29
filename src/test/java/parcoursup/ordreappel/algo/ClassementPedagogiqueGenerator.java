@@ -18,7 +18,7 @@ public class ClassementPedagogiqueGenerator extends Generator<ClassementPedagogi
         int taille = random.nextInt(1000);
         for (int i = 0; i < taille; i++) {
             boolean isBoursier = random.nextBoolean();
-            eleves.add(isBoursier ? Eleve.boursier() : Eleve.nonBoursier());
+            eleves.add(isBoursier ? Eleve.boursier().resident() : Eleve.nonBoursier().resident());
         }
         return new ClassementPedagogique(eleves.toArray(new Eleve[0]));
     }

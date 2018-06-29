@@ -8,7 +8,7 @@ public class OrdreAppelTest {
 
     @Test
     public void calculer_le_pourcentage_de_boursiers() {
-        OrdreAppel ordreAppel = OrdreAppel.de(Eleve.nonBoursier(), Eleve.boursier(), Eleve.nonBoursier(), Eleve.nonBoursier());
+        OrdreAppel ordreAppel = OrdreAppel.de(Eleve.nonBoursier().nonResident(), Eleve.boursier().nonResident(), Eleve.nonBoursier().nonResident(), Eleve.nonBoursier().nonResident());
 
         Taux pourcentageBoursiers = ordreAppel.calculerPourcentageBoursiers(Eleve::isBoursier);
 
@@ -26,7 +26,8 @@ public class OrdreAppelTest {
 
     @Test
     public void indique_que_le_taux_est_respecte() {
-        OrdreAppel ordreAppel = OrdreAppel.de(Eleve.nonBoursier(), Eleve.boursier(), Eleve.nonBoursier(), Eleve.nonBoursier());
+        OrdreAppel ordreAppel = OrdreAppel.de(Eleve.nonBoursier().nonResident(), Eleve.boursier().nonResident(),
+                Eleve.nonBoursier().nonResident(), Eleve.nonBoursier().nonResident());
 
         boolean tauxRespecte = ordreAppel.respecte(new Taux(25), Eleve::isBoursier);
 
@@ -35,7 +36,8 @@ public class OrdreAppelTest {
 
     @Test
     public void indique_que_le_taux_n_est_pas_respecte_pour_un_taux_limite() {
-        OrdreAppel ordreAppel = OrdreAppel.de(Eleve.nonBoursier(), Eleve.boursier(), Eleve.nonBoursier());
+        OrdreAppel ordreAppel = OrdreAppel.de(Eleve.nonBoursier().nonResident(), Eleve.boursier().nonResident(),
+                Eleve.nonBoursier().nonResident());
 
         boolean tauxRespecte = ordreAppel.respecte(new Taux(34), Eleve::isBoursier);
 
@@ -44,11 +46,11 @@ public class OrdreAppelTest {
 
     @Test
     public void ajoute_un_eleve_en_dernier_a_l_ordre() {
-        Eleve premierSelectionne = Eleve.nonBoursier();
-        Eleve deuxiemeSelectionne = Eleve.boursier();
+        Eleve premierSelectionne = Eleve.nonBoursier().nonResident();
+        Eleve deuxiemeSelectionne = Eleve.boursier().nonResident();
         OrdreAppel ordreAppel = OrdreAppel.de(premierSelectionne, deuxiemeSelectionne);
 
-        Eleve nouveauSelectionne = Eleve.nonBoursier();
+        Eleve nouveauSelectionne = Eleve.nonBoursier().nonResident();
         OrdreAppel nouvelOrdreAppel = ordreAppel.ajouter(nouveauSelectionne);
 
         assertThat(nouvelOrdreAppel).isEqualTo(OrdreAppel.de(premierSelectionne, deuxiemeSelectionne, nouveauSelectionne));

@@ -1,6 +1,6 @@
 package parcoursup.ordreappel.algo;
 
-public class Eleve {
+public class Eleve implements Comparable<Eleve> {
     private final StatusBourse statusBourse;
     private final StatusResident statusResident;
 
@@ -9,12 +9,12 @@ public class Eleve {
         this.statusResident = statusResident;
     }
 
-    static Eleve nonBoursier() {
-        return new Eleve(StatusBourse.NON_BOURSIER, StatusResident.RESIDENT);
+    static EleveAvecStatusBoursier nonBoursier() {
+        return new EleveAvecStatusBoursier(StatusBourse.NON_BOURSIER);
     }
 
-    public static Eleve boursier() {
-        return new Eleve(StatusBourse.BOURSIER, StatusResident.RESIDENT);
+    public static EleveAvecStatusBoursier boursier() {
+        return new EleveAvecStatusBoursier(StatusBourse.BOURSIER);
     }
 
     @Override
@@ -25,19 +25,36 @@ public class Eleve {
                 '}';
     }
 
-    public static Eleve resident() {
-        return new Eleve(StatusBourse.NON_BOURSIER, StatusResident.RESIDENT);
-    }
-
-    public static Eleve nonResident() {
-        return new Eleve(StatusBourse.NON_BOURSIER, StatusResident.NON_RESIDENT);
-    }
-
     public boolean isBoursier() {
         return statusBourse == StatusBourse.BOURSIER;
     }
 
     boolean hasStatus(StatusAvecPriorite status) {
         return this.statusBourse == status || this.statusResident == status;
+    }
+
+    @Override
+    public int compareTo(Eleve o) {
+        return Integer.compare(o.getPriorite(), this.getPriorite());
+    }
+
+    public int getPriorite() {
+        return (statusBourse == StatusBourse.BOURSIER ? 2 : 0) + (statusResident == StatusResident.RESIDENT ? 1 : 0);
+    }
+
+    public static class EleveAvecStatusBoursier {
+        private final StatusBourse statusBourse;
+
+        public EleveAvecStatusBoursier(StatusBourse statusBourse) {
+            this.statusBourse = statusBourse;
+        }
+
+        public Eleve resident() {
+            return new Eleve(statusBourse, StatusResident.RESIDENT);
+        }
+
+        public Eleve nonResident() {
+            return new Eleve(statusBourse, StatusResident.NON_RESIDENT);
+        }
     }
 }

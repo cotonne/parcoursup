@@ -5,6 +5,6 @@ public enum StatusResident implements StatusAvecPriorite {
 
     @Override
     public StatusAvecPriorite nonPrioritaire() {
-        return RESIDENT;
+        return NON_RESIDENT;
     }
 }
