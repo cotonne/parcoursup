@@ -9,16 +9,16 @@ public class ComissionExamen {
         this.formationProposée = formationProposée;
     }
 
-    public OrdreAppel ordonnerSelon(ClassementPedagogique classementPedagogique, Taux tauxBoursier) {
-        OrdreAppel ordreAppel = ordonnerParCritères(classementPedagogique, tauxBoursier);
+    public OrdreAppel ordonnerSelon(ClassementPedagogique classementPedagogique, Pair<StatusBourse, Taux>... contrainte) {
+        OrdreAppel ordreAppel = ordonnerParCritères(classementPedagogique, contrainte);
         return limiterParPlaceFormation(ordreAppel);
     }
 
-    OrdreAppel ordonnerParCritères(ClassementPedagogique classementPedagogique, Taux tauxBoursier) {
+    OrdreAppel ordonnerParCritères(ClassementPedagogique classementPedagogique, Pair<StatusBourse, Taux>... contrainte) {
         ClassementPedagogique classementPedagogiqueCourant = classementPedagogique;
         OrdreAppel ordreAppel = new OrdreAppel();
         while (classementPedagogiqueCourant.aDesPostulants()) {
-            Pair<Eleve, ClassementPedagogique> pair = choisir(tauxBoursier, classementPedagogiqueCourant, ordreAppel);
+            Pair<Eleve, ClassementPedagogique> pair = choisir(classementPedagogiqueCourant, ordreAppel, contrainte);
 
             Eleve nouveauSelectionne = pair.getLeft();
             ordreAppel = ordreAppel.ajouter(nouveauSelectionne);
@@ -28,9 +28,10 @@ public class ComissionExamen {
         return ordreAppel;
     }
 
-    private Pair<Eleve, ClassementPedagogique> choisir(Taux tauxBoursier, ClassementPedagogique classementPedagogique, OrdreAppel ordreAppel) {
+    private Pair<Eleve, ClassementPedagogique> choisir(ClassementPedagogique classementPedagogique, OrdreAppel ordreAppel, Pair<StatusBourse, Taux>... contrainte) {
         Pair<Eleve, ClassementPedagogique> pair;
-        if (ordreAppel.respecte(tauxBoursier)) {
+        Taux taux = contrainte[0].getValue();
+        if (ordreAppel.respecte(taux)) {
             pair = classementPedagogique.prendreSuivant();
         } else {
             StatusBourse statusBourse;

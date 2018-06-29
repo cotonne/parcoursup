@@ -1,5 +1,6 @@
 package parcoursup.ordreappel.algo;
 
+import org.apache.commons.lang3.tuple.Pair;
 import org.junit.jupiter.api.Test;
 
 import static org.assertj.core.api.Assertions.assertThat;
@@ -21,7 +22,7 @@ public class CommissionExamenTest {
         Formation formation = new Formation(0);
         ComissionExamen commisionExamen = new ComissionExamen(formation);
 
-        OrdreAppel ordreAppel = commisionExamen.ordonnerSelon(classementPedagogique, new Taux(0));
+        OrdreAppel ordreAppel = commisionExamen.ordonnerSelon(classementPedagogique, Pair.of(StatusBourse.BOURSIER, Taux.ZERO));
 
         assertThat(ordreAppel).isEqualTo(new OrdreAppel());
     }
@@ -34,7 +35,7 @@ public class CommissionExamenTest {
         Formation formation = new Formation(1);
         ComissionExamen commisionExamen = new ComissionExamen(formation);
 
-        OrdreAppel ordreAppel = commisionExamen.ordonnerSelon(classementPedagogique, new Taux(0));
+        OrdreAppel ordreAppel = commisionExamen.ordonnerSelon(classementPedagogique, Pair.of(StatusBourse.BOURSIER, Taux.ZERO));
 
         assertThat(ordreAppel).isEqualTo(OrdreAppel.de(eleve));
     }
@@ -48,7 +49,7 @@ public class CommissionExamenTest {
         Formation formation = new Formation(2);
         ComissionExamen commisionExamen = new ComissionExamen(formation);
 
-        OrdreAppel ordreAppel = commisionExamen.ordonnerSelon(classementPedagogique, new Taux(0));
+        OrdreAppel ordreAppel = commisionExamen.ordonnerSelon(classementPedagogique, Pair.of(StatusBourse.BOURSIER, Taux.ZERO));
 
         assertThat(ordreAppel).isEqualTo(OrdreAppel.de(eleve1, eleve2));
     }
@@ -63,7 +64,7 @@ public class CommissionExamenTest {
         Formation formation = new Formation(2);
         ComissionExamen commisionExamen = new ComissionExamen(formation);
 
-        OrdreAppel ordreAppel = commisionExamen.ordonnerSelon(classementPedagogique, new Taux(0));
+        OrdreAppel ordreAppel = commisionExamen.ordonnerSelon(classementPedagogique, Pair.of(StatusBourse.BOURSIER, Taux.ZERO));
 
         assertThat(ordreAppel).isEqualTo(OrdreAppel.de(eleve1, eleve2));
     }
@@ -77,7 +78,7 @@ public class CommissionExamenTest {
         Formation formation = new Formation(1);
         ComissionExamen commisionExamen = new ComissionExamen(formation);
 
-        OrdreAppel ordreAppel = commisionExamen.ordonnerSelon(classementPedagogique, new Taux(1));
+        OrdreAppel ordreAppel = commisionExamen.ordonnerSelon(classementPedagogique, Pair.of(StatusBourse.BOURSIER, new Taux(1)));
 
         assertThat(ordreAppel).isEqualTo(OrdreAppel.de(eleveBoursier));
     }
@@ -95,7 +96,7 @@ public class CommissionExamenTest {
         Formation formation = new Formation(3);
         ComissionExamen commisionExamen = new ComissionExamen(formation);
 
-        OrdreAppel ordreAppel = commisionExamen.ordonnerSelon(classementPedagogique, new Taux(1));
+        OrdreAppel ordreAppel = commisionExamen.ordonnerSelon(classementPedagogique, Pair.of(StatusBourse.BOURSIER, new Taux(1)));
 
         assertThat(ordreAppel).isEqualTo(OrdreAppel.de(eleveBoursier1, eleveNonBoursier, eleveBoursier2));
     }
@@ -109,7 +110,7 @@ public class CommissionExamenTest {
         Formation formation = new Formation(3);
         ComissionExamen commisionExamen = new ComissionExamen(formation);
 
-        OrdreAppel ordreAppel = commisionExamen.ordonnerParCritères(classementPedagogique, Taux.ZERO);
+        OrdreAppel ordreAppel = commisionExamen.ordonnerParCritères(classementPedagogique, Pair.of(StatusBourse.BOURSIER, Taux.ZERO));
 
         assertThat(ordreAppel).isEqualTo(OrdreAppel.de(eleves));
     }
@@ -122,7 +123,7 @@ public class CommissionExamenTest {
         Formation formation = new Formation(3);
         ComissionExamen commisionExamen = new ComissionExamen(formation);
 
-        OrdreAppel ordreAppel = commisionExamen.ordonnerParCritères(classementPedagogique, new Taux(3));
+        OrdreAppel ordreAppel = commisionExamen.ordonnerParCritères(classementPedagogique, Pair.of(StatusBourse.BOURSIER, new Taux(3)));
 
         assertThat(ordreAppel).isEqualTo(OrdreAppel.de(eleves));
     }
