@@ -83,17 +83,17 @@ public class OrdreAppel {
         return OrdreAppel.de(eleves.subList(0, nombrePlace).toArray(new Eleve[0]));
     }
 
-    public boolean respecte(TauxBoursier tauxBoursier) {
+    public boolean respecte(Taux tauxBoursier) {
         return tauxBoursier.estMoinsQue(calculerPourcentageBoursiers());
     }
 
-    public TauxBoursier calculerPourcentageBoursiers() {
+    public Taux calculerPourcentageBoursiers() {
         int nombreEleves = eleves.size();
         if (nombreEleves == 0) {
-            return TauxBoursier.ZERO;
+            return Taux.ZERO;
         }
         long nombreBoursiers = eleves.stream().filter(Eleve::isBoursier).count();
-        return new TauxBoursier(nombreBoursiers * 100 / nombreEleves);
+        return new Taux(nombreBoursiers * 100 / nombreEleves);
     }
 
     public OrdreAppel ajouter(Eleve nouveauSelectionne) {

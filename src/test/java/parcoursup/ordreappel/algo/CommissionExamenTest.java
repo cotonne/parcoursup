@@ -21,7 +21,7 @@ public class CommissionExamenTest {
         Formation formation = new Formation(0);
         ComissionExamen commisionExamen = new ComissionExamen(formation);
 
-        OrdreAppel ordreAppel = commisionExamen.ordonnerSelon(classementPedagogique, new TauxBoursier(0));
+        OrdreAppel ordreAppel = commisionExamen.ordonnerSelon(classementPedagogique, new Taux(0));
 
         assertThat(ordreAppel).isEqualTo(new OrdreAppel());
     }
@@ -34,7 +34,7 @@ public class CommissionExamenTest {
         Formation formation = new Formation(1);
         ComissionExamen commisionExamen = new ComissionExamen(formation);
 
-        OrdreAppel ordreAppel = commisionExamen.ordonnerSelon(classementPedagogique, new TauxBoursier(0));
+        OrdreAppel ordreAppel = commisionExamen.ordonnerSelon(classementPedagogique, new Taux(0));
 
         assertThat(ordreAppel).isEqualTo(OrdreAppel.de(eleve));
     }
@@ -48,7 +48,7 @@ public class CommissionExamenTest {
         Formation formation = new Formation(2);
         ComissionExamen commisionExamen = new ComissionExamen(formation);
 
-        OrdreAppel ordreAppel = commisionExamen.ordonnerSelon(classementPedagogique, new TauxBoursier(0));
+        OrdreAppel ordreAppel = commisionExamen.ordonnerSelon(classementPedagogique, new Taux(0));
 
         assertThat(ordreAppel).isEqualTo(OrdreAppel.de(eleve1, eleve2));
     }
@@ -63,7 +63,7 @@ public class CommissionExamenTest {
         Formation formation = new Formation(2);
         ComissionExamen commisionExamen = new ComissionExamen(formation);
 
-        OrdreAppel ordreAppel = commisionExamen.ordonnerSelon(classementPedagogique, new TauxBoursier(0));
+        OrdreAppel ordreAppel = commisionExamen.ordonnerSelon(classementPedagogique, new Taux(0));
 
         assertThat(ordreAppel).isEqualTo(OrdreAppel.de(eleve1, eleve2));
     }
@@ -77,7 +77,7 @@ public class CommissionExamenTest {
         Formation formation = new Formation(1);
         ComissionExamen commisionExamen = new ComissionExamen(formation);
 
-        OrdreAppel ordreAppel = commisionExamen.ordonnerSelon(classementPedagogique, new TauxBoursier(1));
+        OrdreAppel ordreAppel = commisionExamen.ordonnerSelon(classementPedagogique, new Taux(1));
 
         assertThat(ordreAppel).isEqualTo(OrdreAppel.de(eleveBoursier));
     }
@@ -95,7 +95,7 @@ public class CommissionExamenTest {
         Formation formation = new Formation(3);
         ComissionExamen commisionExamen = new ComissionExamen(formation);
 
-        OrdreAppel ordreAppel = commisionExamen.ordonnerSelon(classementPedagogique, new TauxBoursier(1));
+        OrdreAppel ordreAppel = commisionExamen.ordonnerSelon(classementPedagogique, new Taux(1));
 
         assertThat(ordreAppel).isEqualTo(OrdreAppel.de(eleveBoursier1, eleveNonBoursier, eleveBoursier2));
     }
@@ -109,7 +109,7 @@ public class CommissionExamenTest {
         Formation formation = new Formation(3);
         ComissionExamen commisionExamen = new ComissionExamen(formation);
 
-        OrdreAppel ordreAppel = commisionExamen.ordonnerParCritères(classementPedagogique, TauxBoursier.ZERO);
+        OrdreAppel ordreAppel = commisionExamen.ordonnerParCritères(classementPedagogique, Taux.ZERO);
 
         assertThat(ordreAppel).isEqualTo(OrdreAppel.de(eleves));
     }
@@ -122,7 +122,7 @@ public class CommissionExamenTest {
         Formation formation = new Formation(3);
         ComissionExamen commisionExamen = new ComissionExamen(formation);
 
-        OrdreAppel ordreAppel = commisionExamen.ordonnerParCritères(classementPedagogique, new TauxBoursier(3));
+        OrdreAppel ordreAppel = commisionExamen.ordonnerParCritères(classementPedagogique, new Taux(3));
 
         assertThat(ordreAppel).isEqualTo(OrdreAppel.de(eleves));
     }

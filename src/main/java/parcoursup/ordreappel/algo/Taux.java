@@ -2,22 +2,22 @@ package parcoursup.ordreappel.algo;
 
 import java.util.Objects;
 
-public class TauxBoursier {
-    public static final TauxBoursier ZERO = new TauxBoursier(0);
+public class Taux {
+    public static final Taux ZERO = new Taux(0);
     private final long tauxEnPourcentage;
 
-    public TauxBoursier(long tauxEnPourcentage) {
+    public Taux(long tauxEnPourcentage) {
         this.tauxEnPourcentage = tauxEnPourcentage;
     }
 
     @Override
     public String toString() {
-        return "TauxBoursier{" +
+        return "Taux{" +
                 "tauxEnPourcentage=" + tauxEnPourcentage +
                 '}';
     }
 
-    public boolean estMoinsQue(TauxBoursier tauxBoursier) {
+    public boolean estMoinsQue(Taux tauxBoursier) {
         return tauxEnPourcentage <= tauxBoursier.tauxEnPourcentage;
     }
 
@@ -25,13 +25,12 @@ public class TauxBoursier {
     public boolean equals(Object o) {
         if (this == o) return true;
         if (o == null || getClass() != o.getClass()) return false;
-        TauxBoursier that = (TauxBoursier) o;
+        Taux that = (Taux) o;
         return tauxEnPourcentage == that.tauxEnPourcentage;
     }
 
     @Override
     public int hashCode() {
-
         return Objects.hash(tauxEnPourcentage);
     }
 }

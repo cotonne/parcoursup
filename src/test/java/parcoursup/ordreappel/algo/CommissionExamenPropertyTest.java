@@ -33,7 +33,7 @@ public class CommissionExamenPropertyTest {
         Formation formation = new Formation(3);
         ComissionExamen commisionExamen = new ComissionExamen(formation);
 
-        OrdreAppel ordreAppel = commisionExamen.ordonnerParCritères(classementPedagogique, new TauxBoursier(tauxEnPourcentage));
+        OrdreAppel ordreAppel = commisionExamen.ordonnerParCritères(classementPedagogique, new Taux(tauxEnPourcentage));
 
         int i = 0;
         long nombre_boursiers_total = classementPedagogique.eleves.stream().filter(Eleve::isBoursier).count();
@@ -58,7 +58,7 @@ public class CommissionExamenPropertyTest {
         Formation formation = new Formation(3);
         ComissionExamen commisionExamen = new ComissionExamen(formation);
 
-        OrdreAppel ordreAppel = commisionExamen.ordonnerParCritères(classementPedagogique, new TauxBoursier(tauxEnPourcentage));
+        OrdreAppel ordreAppel = commisionExamen.ordonnerParCritères(classementPedagogique, new Taux(tauxEnPourcentage));
 
         Map<Eleve, Integer> classementPedagogiqueEleves = zipWithIndex(classementPedagogique.eleves.toArray(new Eleve[0]));
         Map<Eleve, Integer> ordreAppelEleves = zipWithIndex(ordreAppel.eleves.toArray(new Eleve[0]));

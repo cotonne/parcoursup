@@ -9,12 +9,12 @@ public class ComissionExamen {
         this.formationProposée = formationProposée;
     }
 
-    public OrdreAppel ordonnerSelon(ClassementPedagogique classementPedagogique, TauxBoursier tauxBoursier) {
+    public OrdreAppel ordonnerSelon(ClassementPedagogique classementPedagogique, Taux tauxBoursier) {
         OrdreAppel ordreAppel = ordonnerParCritères(classementPedagogique, tauxBoursier);
         return limiterParPlaceFormation(ordreAppel);
     }
 
-    OrdreAppel ordonnerParCritères(ClassementPedagogique classementPedagogique, TauxBoursier tauxBoursier) {
+    OrdreAppel ordonnerParCritères(ClassementPedagogique classementPedagogique, Taux tauxBoursier) {
         ClassementPedagogique classementPedagogiqueCourant = classementPedagogique;
         OrdreAppel ordreAppel = new OrdreAppel();
         while (classementPedagogiqueCourant.aDesPostulants()) {
@@ -28,7 +28,7 @@ public class ComissionExamen {
         return ordreAppel;
     }
 
-    private Pair<Eleve, ClassementPedagogique> choisir(TauxBoursier tauxBoursier, ClassementPedagogique classementPedagogique, OrdreAppel ordreAppel) {
+    private Pair<Eleve, ClassementPedagogique> choisir(Taux tauxBoursier, ClassementPedagogique classementPedagogique, OrdreAppel ordreAppel) {
         Pair<Eleve, ClassementPedagogique> pair;
         if (ordreAppel.respecte(tauxBoursier)) {
             pair = classementPedagogique.prendreSuivant();
